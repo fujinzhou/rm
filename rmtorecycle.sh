@@ -2,7 +2,7 @@
 #Author:ymc023
 #Mail:ymc023@163.com 
 #Platform:Centos7,debian8
-#Date:2016年02月21日 星期日 20时32分44秒
+#Date:2017年02月16日 星期四 10时36分
 
 #运行脚本将下面的内容追加到~/.bashrc
 #运行完脚本请source ~/.bashrc
@@ -35,14 +35,21 @@ mkrecycle()
 }
 mkrecycle
 TRASH=~/.recycle/
-
+whoami=`whoami`
+#定义禁止删除根目录
+rmdir='/'
 #移动文件至.recycle
 rmtorecycle()
 {
-    if [ "\$1" = "" ];then
+    if [ "$1" = "" ];then
     echo "Usage:rm <filename>"
+    elif [ "$1" = $rmdir ];then
+    echo "禁止删除根操作!已经邮件通知给系统管理员"
+    echo $whoami 在执行删除根的操作，请悉知 | mail -s "warning" 1445675350@qq.com
     else
-    mv -f \$1 \$TRASH --backup=numbered -fi
+    mv -f $1 $TRASH --backup=numbered -fi
+    echo $1 已经被删除 | mail -s "warning" 1445675350@qq.com
+    echo $1 已经被删除 >>/var/log/remove.log
     fi
 }
 
