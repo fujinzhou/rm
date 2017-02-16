@@ -1,0 +1,11 @@
+####安装mailx
+yum -y install mailx
+####配置mailx
+cat /etc/mail.rc 
+set from="example@126.com"
+set smtp="smtp.126.com"
+set smtp-auth-user="example@126.com"
+set smtp-auth-password="shouhou19951011"  #客户端授权码
+set smtp-auth=login
+####测试
+echo "mail test" | mail -s "mail test" 1445675350@qq.com
